@@ -22,10 +22,7 @@ function validateComment(comment) {
     const schema = Joi.object({
         text: Joi.string().min(5).max(1000).required(),
         videoId: Joi.string().required(),
-        timeStamp: Joi.string(),
-        likes: Joi.number(),
-        dislikes: Joi.number(),
-        replies: Joi.replySchema, 
+       
     });
     return schema.validate(comment);
 }
