@@ -29,7 +29,7 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
 
-        const { error } = validate(req.body);
+        const { error } = Comment(req.body);
         if (error)
         return res.status(400).send(error);
 
@@ -48,10 +48,10 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
     try {
-        const { error } = validate(req.body);
+        const { error } = Comment(req.body);
         if (error) return res.status(400).send(error);
 
-        const product = await Comment.findByIdAndUpdate(
+        const comment = await Comment.findByIdAndUpdate(
             req.params.id,
             {
                 text: req.body.text,
