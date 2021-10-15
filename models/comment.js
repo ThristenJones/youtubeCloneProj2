@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Joi = require('joi');
 
 const replySchema = new mongoose.Schema({
     text: {type: String, required: true, minlength: 5, maxlength: 1000},
@@ -17,13 +18,21 @@ const commentSchema = new mongoose.Schema({
 const Reply = mongoose.model('Reply', replySchema);
 const Comment = mongoose.model('Comment', commentSchema);
 
-//validation
+function validateComment(comment) {
+    const schema = Joi.object({
+        text: Joi.string().min(5).max(1000).required(),
+        videoId: Joi.string().required(),
+        timeStamp: Joi.string(),
+        likes: Joi.number(),
+        dislikes: Joi.number(),
+        replies: Joi.replySchema, 
+    });
+    return schema.validate(comment);
+}
 
-//text: Joi.string().required().min(5).max(1000)
+module.exports = { validateComment, commentSchema }
 
 module.exports = {
     Reply,
     Comment,
-    //validateComment
-    //validateReply
 }
