@@ -94,18 +94,19 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id/dislikes', async (req, res) => {
     try {
-        const comment = await Comment.findById(
-            req.params.id,
+        const comment = await Comment.findById(req.params.id);
+
+
+        if (!comment)
+        return res.send(400).send(`The product with the id: "${req.params.id}" does not exist`);
+
+            if (comment)
             {
-                dislikes: req.body.dislikes
-            });
-
-    
-            
-        comment.dislikes ++
-
+                comment.dislikes+= 1;
+            }
+         
         await comment.save();
 
         return res.send(comment)
@@ -114,6 +115,27 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+
+router.put('/:id/likes', async (req, res) => {
+    try {
+        const comment = await Comment.findById(req.params.id);
+
+
+        if (!comment)
+        return res.send(400).send(`The product with the id: "${req.params.id}" does not exist`);
+
+            if (comment)
+            {
+                comment.likes+= 1;
+            }
+         
+        await comment.save();
+
+        return res.send(comment)
+    } catch (ex) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+});
 
 router.delete('/:id', async (req, res) => {
     try {

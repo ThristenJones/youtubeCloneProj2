@@ -22,6 +22,7 @@ function validateComment(comment) {
     const schema = Joi.object({
         text: Joi.string().min(5).max(1000).required(),
         videoId: Joi.string().required(),
+        
        
     });
     return schema.validate(comment);
